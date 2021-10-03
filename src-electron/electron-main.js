@@ -37,7 +37,6 @@ function createWindow () {
       mainWindow.webContents.closeDevTools()
     })
   }
-
   mainWindow.on('closed', () => {
     mainWindow = null
   })
