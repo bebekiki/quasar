@@ -9,7 +9,7 @@
           icon="local_grocery_store"
           class="absolute"
           style="top: 0; right: 12px; transform: translateY(-50%);"
-          @click="newWindow"
+          @click="count = count + 1"
         />
 
         <div class="row no-wrap items-center">
@@ -46,7 +46,7 @@
         <div>
           {{date}}
         </div>
-        <q-btn flat color="primary" @click="count = count + 1">
+        <q-btn flat color="primary" @click="newWindow">
           {{$t('about.reserver')}}
         </q-btn>
       </q-card-actions>
@@ -55,6 +55,7 @@
 
 <script>
 import { ref } from 'vue'
+import { Platform } from 'quasar'
 
 export default {
   name: 'cardAbout',
@@ -100,13 +101,29 @@ export default {
       }
     }
   },
+  mounted () {
+    // window.api.receive('test', (event, args) => {
+    //   console.log('renderer')
+    // })
+  },
   methods: {
     newWindow () {
-      this.$router.push({
-        path: '/book',
-        query: { name: this.name, date: this.date, number: this.count }
-      })
-      // window.ipcRenderer.send('bouton', this.name, this.date, this.number)
+      if (Platform.is.electron) {
+        window.ipcRenderer.send('bouton', this.name, this.date, this.number)
+      } else {
+        this.$router.push({
+          path: '/book',
+          query: { name: this.name, date: this.date, number: this.count }
+        })
+      }
+      // if (window.ipcRenderer.receive) {
+      //   window.ipcRenderer.receive('test', (event, name, date, number) => {
+      //     this.$router.push({
+      //       path: '/book',
+      //       query: { name: name, date: date, number: number }
+      //     })
+      //   })
+      // }
     }
   }
 }

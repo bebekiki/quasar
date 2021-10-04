@@ -44,17 +44,32 @@
 </template>
 
 <script>
+import { ref } from 'vue'
 export default {
-//   mounted () {
-//     this.getData()
-//   },
-//   methods: {
-//     getData () {
-//       window.ipcRenderer.recieve('test', (args) => {
-//         alert('tt')
-//       })
-//     }
-//   }
+  setup () {
+    const name = ref(0)
+    return {
+      name
+    }
+  },
+  mounted () {
+    console.log(window.ipcRenderer)
+    // if (window.ipcRenderer.receive) {
+    //   window.ipcRenderer.receive('test', (event, name, date, number) => {
+    //     alert('yy')
+    //     this.name = 1
+    //   })
+    // }
+  },
+  methods: {
+    // getDate () {
+    //   if (window.ipcRenderer.receive) {
+    //     window.ipcRenderer.receive('test', (event, name, date, number) => {
+    //       alert('yy')
+    //     })
+    //   }
+    // }
+  }
 }
 </script>
 

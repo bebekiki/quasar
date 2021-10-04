@@ -45,14 +45,22 @@ function createWindow () {
 function second (name, date, number) {
   window2 = new BrowserWindow()
   window2.setMenu(null)
-  // window2.webContents.on('did-finish-load', () => {
-  //   alert('dom')
-  //   window2.loadURL(process.env.APP_URL + '#/book')
-  //   mainWindow.webContents.send('test', name)
-  // })
   window2.loadURL(process.env.APP_URL + '#/book')
-  mainWindow.webContents.send('test', name)
+  window2.webContents.once('dom-ready', () => {
+    console.log('dom')
+    mainWindow.webContents.send('test', name, date, number)
+  })
   window2.webContents.openDevTools()
+  // window2 = new BrowserWindow()
+  // window2.setMenu(null)
+  // // window2.webContents.on('did-finish-load', () => {
+  // console.log('window2')
+  // mainWindow.webContents.send('test', name, date, number)
+  // window2.loadURL(process.env.APP_URL + '#/book')
+  // // })
+  // // mainWindow.webContents.send('test', name, date, number)
+  // // window2.loadURL(process.env.APP_URL + '#/book')
+  // window2.webContents.openDevTools()
 }
 
 app.on('ready', createWindow)
@@ -70,6 +78,5 @@ app.on('activate', () => {
 })
 
 ipcMain.on('bouton', (event, name, date, number) => {
-  // console.log('test1' + name, date, number)
   second(name, date, number)
 })

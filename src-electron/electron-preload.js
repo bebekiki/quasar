@@ -13,10 +13,12 @@
 import { contextBridge, ipcRenderer } from 'electron'
 contextBridge.exposeInMainWorld('ipcRenderer', {
   send (channel, name, date, number) {
+    console.log('send')
     ipcRenderer.send(channel, name, date, number)
   },
-  recieve: (channel, func) => ipcRenderer.on(
-    channel,
-    (event, ...args) => func(args)
-  )
+  receive: (channel, name, date, number) => {
+    console.log('receive')
+    ipcRenderer.on(channel, name, date, number)
+    // console.log(name)
+  }
 })
