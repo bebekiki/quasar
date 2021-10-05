@@ -12,7 +12,7 @@
 
                     <q-item-section>
                         <q-item-label>{{$t('detail.nombre')}}</q-item-label>
-                        <q-item-label caption>{{$route.query.name}}</q-item-label>
+                        <q-item-label caption>{{name}}</q-item-label>
                     </q-item-section>
                     </q-item>
 
@@ -23,7 +23,7 @@
 
                     <q-item-section>
                         <q-item-label>{{$t('detail.date')}}</q-item-label>
-                        <q-item-label caption>{{$route.query.date}}</q-item-label>
+                        <q-item-label caption>{{date}}</q-item-label>
                     </q-item-section>
                     </q-item>
 
@@ -34,7 +34,8 @@
 
                     <q-item-section>
                         <q-item-label>{{$t('detail.nombre')}}</q-item-label>
-                        <q-item-label caption>{{$route.query.number}}</q-item-label>
+                        <q-item-label caption>{{number}}</q-item-label>
+                        <!-- <q-item-label caption>{{$route.query.number}}</q-item-label> -->
                     </q-item-section>
                     </q-item>
                 </q-list>
@@ -45,30 +46,35 @@
 
 <script>
 import { ref } from 'vue'
+import { Platform } from 'quasar'
 export default {
   setup () {
-    const name = ref(0)
+    const name = ref(null)
+    const date = ref(null)
+    const number = ref(0)
     return {
-      name
+      name,
+      date,
+      number
     }
   },
   mounted () {
-    console.log(window.ipcRenderer)
-    // if (window.ipcRenderer.receive) {
-    //   window.ipcRenderer.receive('test', (event, name, date, number) => {
-    //     alert('yy')
-    //     this.name = 1
-    //   })
-    // }
+    this.getDate()
   },
   methods: {
-    // getDate () {
-    //   if (window.ipcRenderer.receive) {
-    //     window.ipcRenderer.receive('test', (event, name, date, number) => {
-    //       alert('yy')
-    //     })
-    //   }
-    // }
+    getDate () {
+      if (Platform.is.electron) {
+        window.ipcRenderer.on('getData', (event, name, date, number) => {
+          this.name = name
+          this.date = date
+          this.number = number
+        })
+      } else {
+        this.name = this.$route.query.name
+        this.date = this.$route.query.date
+        this.number = this.$route.query.number
+      }
+    }
   }
 }
 </script>

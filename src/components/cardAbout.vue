@@ -109,7 +109,7 @@ export default {
   methods: {
     newWindow () {
       if (Platform.is.electron) {
-        window.ipcRenderer.send('bouton', this.name, this.date, this.number)
+        window.ipcRenderer.send('bouton', this.name, this.date, this.count)
       } else {
         this.$router.push({
           path: '/book',

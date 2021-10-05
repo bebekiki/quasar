@@ -43,24 +43,18 @@ function createWindow () {
 }
 
 function second (name, date, number) {
-  window2 = new BrowserWindow()
+  window2 = new BrowserWindow({
+    webPreferences: {
+      contextIsolation: true,
+      preload: path.resolve(__dirname, process.env.QUASAR_ELECTRON_PRELOAD)
+    }
+  })
   window2.setMenu(null)
   window2.loadURL(process.env.APP_URL + '#/book')
-  window2.webContents.once('dom-ready', () => {
-    console.log('dom')
-    mainWindow.webContents.send('test', name, date, number)
+  window2.webContents.on('did-finish-load', () => {
+    window2.webContents.send('getData', name, date, number)
   })
   window2.webContents.openDevTools()
-  // window2 = new BrowserWindow()
-  // window2.setMenu(null)
-  // // window2.webContents.on('did-finish-load', () => {
-  // console.log('window2')
-  // mainWindow.webContents.send('test', name, date, number)
-  // window2.loadURL(process.env.APP_URL + '#/book')
-  // // })
-  // // mainWindow.webContents.send('test', name, date, number)
-  // // window2.loadURL(process.env.APP_URL + '#/book')
-  // window2.webContents.openDevTools()
 }
 
 app.on('ready', createWindow)
