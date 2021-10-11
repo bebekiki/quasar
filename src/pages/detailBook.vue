@@ -5,15 +5,15 @@
                 <img src="https://cdn.quasar.dev/img/chicken-salad.jpg">
 
                 <q-list class="q-py-sm">
-                    <q-item clickable>
-                    <q-item-section avatar>
-                        <q-icon color="primary" name="restaurant_menu" />
-                    </q-item-section>
+                    <q-item clickable class="row no-wrap items-center">
+                        <q-item-section avatar>
+                            <q-icon color="primary" name="restaurant_menu" />
+                        </q-item-section>
 
-                    <q-item-section>
-                        <q-item-label>{{$t('detail.nombre')}}</q-item-label>
-                        <q-item-label caption>{{name}}</q-item-label>
-                    </q-item-section>
+                        <q-item-section>
+                            <q-item-label>{{$t('detail.nombre')}}</q-item-label>
+                            <q-item-label caption>{{name}}</q-item-label>
+                        </q-item-section>
                     </q-item>
 
                     <q-item clickable>

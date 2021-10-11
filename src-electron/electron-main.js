@@ -1,5 +1,6 @@
 import { app, BrowserWindow, nativeTheme, ipcMain } from 'electron'
 import path from 'path'
+import { Worker } from 'worker_threads'
 
 try {
   if (process.platform === 'win32' && nativeTheme.shouldUseDarkColors === true) {
@@ -11,6 +12,12 @@ let mainWindow
 let window2
 
 function createWindow () {
+  // let increment = 0
+  // while (increment !== Math.pow(10, 10)) {
+  //   increment++
+  // }
+  // await worker()
+
   /**
    * Initial window options
    */
@@ -40,6 +47,8 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  worker()
 }
 
 function second (name, date, number) {
@@ -74,3 +83,21 @@ app.on('activate', () => {
 ipcMain.on('bouton', (event, name, date, number) => {
   second(name, date, number)
 })
+
+function worker () {
+  const workerContents = require('fs').readFileSync(path.resolve(__dirname, 'workers.js'), { encoding: 'utf8' })
+  const worker = new Worker(workerContents, { eval: true })
+  worker.postMessage(10)
+
+  worker.on('message', (data) => {
+    console.log(data)
+  })
+
+  worker.on('error', (data) => {
+    console.log('error ' + data)
+  })
+
+  worker.on('exit', (data) => {
+    console.log('Operation terminee ' + data)
+  })
+}

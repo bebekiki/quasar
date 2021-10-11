@@ -1,38 +1,38 @@
 <template>
- <q-card class="my-card">
-      <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
+  <q-card class="my-card">
+    <q-img src="https://cdn.quasar.dev/img/chicken-salad.jpg" />
 
-      <q-card-section>
-        <q-btn
-          fab
-          :color="color"
-          icon="local_grocery_store"
-          class="absolute"
-          style="top: 0; right: 12px; transform: translateY(-50%);"
-          @click="count = count + 1"
-        />
+    <q-card-section>
+      <q-btn
+        fab
+        :color="color"
+        icon="local_grocery_store"
+        class="absolute"
+        style="top: 0; right: 12px; transform: translateY(-50%);"
+        @click="count = count + 1"
+      />
 
-        <div class="row no-wrap items-center">
-          <div class="col text-h6 ellipsis">
-            {{name}}
-          </div>
-          <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
-            <q-icon name="shopping_basket" />
-            {{ count }}
-          </div>
+      <div class="row no-wrap items-center">
+        <div class="col text-h6 ellipsis">
+          {{name}}
         </div>
-      </q-card-section>
-
-      <q-card-section class="q-pt-none">
-        <div class="text-caption text-grey">
-          {{pantone_value}}
+        <div class="col-auto text-grey text-caption q-pt-md row no-wrap items-center">
+          <q-icon name="shopping_basket" />
+          {{ count }}
         </div>
-      </q-card-section>
+      </div>
+    </q-card-section>
 
-      <q-separator />
+    <q-card-section class="q-pt-none">
+      <div class="text-caption text-grey">
+        {{pantone_value}}
+      </div>
+    </q-card-section>
 
-      <q-card-actions class="justify-between">
-        <q-btn flat icon="event">
+    <q-separator />
+
+    <q-card-actions class="justify-between">
+      <q-btn flat icon="event">
         <q-popup-proxy @before-show="updateProxy" transition-show="scale" transition-hide="scale">
           <q-date v-model="proxyDate">
             <div class="row items-center justify-end q-gutter-sm">
@@ -41,16 +41,16 @@
             </div>
           </q-date>
         </q-popup-proxy>
-    </q-btn>
-        <!-- <q-btn flat round icon="event" /> -->
-        <div>
-          {{date}}
-        </div>
-        <q-btn flat color="primary" @click="newWindow">
-          {{$t('about.reserver')}}
-        </q-btn>
-      </q-card-actions>
-    </q-card>
+      </q-btn>
+      <!-- <q-btn flat round icon="event" /> -->
+      <div>
+        {{date}}
+      </div>
+      <q-btn flat color="primary" @click="newWindow">
+        {{$t('about.reserver')}}
+      </q-btn>
+    </q-card-actions>
+  </q-card>
 </template>
 
 <script>
@@ -102,9 +102,6 @@ export default {
     }
   },
   mounted () {
-    // window.api.receive('test', (event, args) => {
-    //   console.log('renderer')
-    // })
   },
   methods: {
     newWindow () {
@@ -116,14 +113,6 @@ export default {
           query: { name: this.name, date: this.date, number: this.count }
         })
       }
-      // if (window.ipcRenderer.receive) {
-      //   window.ipcRenderer.receive('test', (event, name, date, number) => {
-      //     this.$router.push({
-      //       path: '/book',
-      //       query: { name: name, date: date, number: number }
-      //     })
-      //   })
-      // }
     }
   }
 }

@@ -8,6 +8,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": true
 },
-"editor.defaultFormatter": "dbaeumer.vscode-eslint"
+"editor.defaultFormatter": "dbaeumer.vscode-eslint",
+"i18n-ally.localesPaths": [
+  "src/i18n"
+]
 
 }
